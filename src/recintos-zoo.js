@@ -15,7 +15,15 @@ class RecintosZoo {
   analisaRecintos(animalNome, quantidade) {
     const animalRecinto = this.recintos[animalNome];
     if (!quantidade) return { erro: "Quantidade inválida" };
-    if (!animalRecinto) return { erro: "Não há recinto viável" };
+    if (!animalRecinto) return { erro: "Animal inválido" };
+    // if (!animalRecinto) return { erro: "Não há recinto viável" };
+
+    for(const recinto of this.recintos){
+      if(recinto.analisarViabilidade(animalNome, quantidade)){
+
+      }
+    }
+
   }
 }
 
