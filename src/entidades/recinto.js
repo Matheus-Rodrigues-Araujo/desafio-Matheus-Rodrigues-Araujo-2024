@@ -6,23 +6,11 @@ class Recinto {
     this.animais = animais;
   }
 
-  avaliarEspaco(animal, quantidade) {
-    const tamanhoRecinto = this.tamanhoTotal;
-    // caso tenha mais de um animal e não achou nenhum animal da mesma espécie,
-    // considera-se 1 espaço extra ocupado
-    if (this.animais.length > 0 && !this.filtrarEspecies(animal)) {
-      tamanhoRecinto -= 1;
-    }
-    const espacoOcupado = animal.tamanho * quantidade;
-    const espacoDisponivel = tamanhoRecinto - espacoOcupado;
-    return espacoDisponivel;
-  }
-
   verificarBiomasIguais(animalBiomas) {
     const setAnimalBiomas = new Set(animalBiomas);
     const setBiomasRecinto = new Set(this.biomas);
 
-    if (setAnimalBiomas.size !== setBiomasRecinto) return false;
+    if (setAnimalBiomas.size !== setBiomasRecinto.size) return false;
 
     for (const bioma of setBiomasRecinto) {
       if (!setAnimalBiomas.has(bioma)) return false;
@@ -35,25 +23,45 @@ class Recinto {
     return this.animais.some((a) => a.especie === animal.especie);
   }
 
+  calcularEspacoOcupado() {
+    let espOcupadoAnimais = 0;
+
+    for (let i in this.animais) {
+      espOcupadoAnimais += this.animais[i].tamanho;
+    }
+
+    return this.tamanhoTotal - espOcupadoAnimais;
+  }
+
   analisarViabilidade(animal, quantidade) {
     if (
       this.animais.length > 0 &&
       animal.dieta === "carnívoro" &&
       !this.filtrarEspecies(animal)
     ) {
-      return { erro: "Não há recinto viável" };
+      return false;
     }
 
     if (this.animais.length === 0 && animal.especie === "MACACO") {
-      return { erro: "Não há recinto viável" };
+      return false;
     }
 
     if (
       animal.especie === "HIPOPOTAMO" &&
       !this.verificarBiomasIguais(animal.biomas)
     ) {
-      return { erro: "Não há recinto viável" };
+      return false;
     }
+
+    if (
+      animal.especie === "CROCODILO" &&
+      !this.verificarBiomasIguais(animal.biomas)
+    ) {
+      return false;
+    }
+    if (quantidade >= this.tamanhoTotal) return false;
+
+    return true;
   }
 }
 

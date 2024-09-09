@@ -13,17 +13,43 @@ class RecintosZoo {
   }
 
   analisaRecintos(animalNome, quantidade) {
-    const animalRecinto = this.recintos[animalNome];
-    if (!quantidade) return { erro: "Quantidade inválida" };
-    if (!animalRecinto) return { erro: "Animal inválido" };
-    // if (!animalRecinto) return { erro: "Não há recinto viável" };
+    const animal = Object.values(a).find(
+      (animal) => animal.especie === animalNome
+    );
+    if (!quantidade || quantidade <= 0)
+      return { erro: "Quantidade inválida", recintosViaveis: false };
+    if (!animal) return { erro: "Animal inválido", recintosViaveis: false };
+    const { tamanho } = animal;
 
-    for(const recinto of this.recintos){
-      if(recinto.analisarViabilidade(animalNome, quantidade)){
+    const recintosViaveis = [];
+    this.recintos
+      .map((recinto) => {
+        if (recinto.analisarViabilidade(animal, quantidade)) {
+          const espacoLivre =
+            recinto.calcularEspacoOcupado() - tamanho * quantidade;
 
-      }
+          recintosViaveis.push({
+            id: recinto.id,
+            espacoLivre: espacoLivre,
+            espacoTotal: recinto.tamanhoTotal,
+          });
+        }
+        return null;
+      })
+      .filter(Boolean);
+
+    if (recintosViaveis.length === 0) {
+      return { erro: "Não há recinto viável", recintosViaveis: false };
     }
 
+    const recintosFormatados = recintosViaveis
+      .sort((a, b) => a.id - b.id)
+      .map(
+        ({ id, espacoLivre, espacoTotal }) =>
+          `Recinto ${id} (espaço livre: ${espacoLivre} total: ${espacoTotal})`
+      );
+
+    return { recintosViaveis: recintosFormatados };
   }
 }
 
