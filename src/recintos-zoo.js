@@ -26,8 +26,7 @@ class RecintosZoo {
       .map((recinto) => {
         if (recinto.analisarViabilidade(animal, quantidade)) {
           const especieUnica = recinto.filtrarEspecies(animal);
-          const espacoOcupado = recinto.calcularEspacoOcupado();
-          const espacoLivre = espacoOcupado - tamanho * quantidade;
+          const espacoLivre = recinto.calcularEspacoLivre(animal, quantidade)
 
           recintosViaveis.push({
             id: recinto.id,
