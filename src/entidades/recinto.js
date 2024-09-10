@@ -33,6 +33,12 @@ class Recinto {
     return this.tamanhoTotal - espOcupadoAnimais;
   }
 
+  existemEspeciesDiferentes() {
+    const especies = this.animais.map((a) => a.especie);
+    const especiesUnicas = new Set(especies);
+    return especiesUnicas.size > 1; // Retorna true se houver mais de uma espécie
+  }
+
   analisarViabilidade(animal, quantidade) {
     if (
       this.animais.length > 0 &&
@@ -42,7 +48,11 @@ class Recinto {
       return false;
     }
 
-    if (this.animais.length === 0 && animal.especie === "MACACO") {
+    if (
+      this.animais.length === 0 &&
+      animal.especie === "MACACO" &&
+      quantidade === 1
+    ) {
       return false;
     }
 
