@@ -1,5 +1,5 @@
-import Recinto from "../src/entidades/recinto";
-import { ANIMAIS_FIXOS as a } from "./constants/data";
+import { Recinto } from "./entidades/recinto";
+import { ANIMAIS as a } from "./constants/data";
 
 class RecintosZoo {
   constructor() {
@@ -12,21 +12,29 @@ class RecintosZoo {
     ];
   }
 
-  analisaRecintos(animalNome, quantidade) {
+  analisaRecintos(nomeAnimal, quantidade) {
     const animal = Object.values(a).find(
-      (animal) => animal.especie === animalNome
+      (animal) => animal.especie === nomeAnimal
     );
-    if (!quantidade || quantidade <= 0)
+
+    if (!quantidade || quantidade <= 0) {
       return { erro: "Quantidade inválida", recintosViaveis: false };
-    if (!animal) return { erro: "Animal inválido", recintosViaveis: false };
-    const { tamanho } = animal;
+    }
+    if (!animal) {
+      return { erro: "Animal inválido", recintosViaveis: false };
+    }
+
+    const { especie, tamanho } = animal;
 
     const recintosViaveis = [];
     this.recintos
       .map((recinto) => {
         if (recinto.analisarViabilidade(animal, quantidade)) {
-          const especieUnica = recinto.filtrarEspecies(animal);
-          const espacoLivre = recinto.calcularEspacoLivre(animal, quantidade)
+          const espacoLivre = recinto.calcularEspacoLivre(
+            especie,
+            tamanho,
+            quantidade
+          );
 
           recintosViaveis.push({
             id: recinto.id,

@@ -1,6 +1,6 @@
-import Animal from "../entidades/animal"
+import { Animal } from "../entidades/animal";
 
-export const ANIMAIS_FIXOS = {
+const ANIMAIS = {
   LEAO: new Animal("LEAO", ["savana"], "carnívoro", 3),
   LEOPARDO: new Animal("LEOPARDO", ["savana"], "carnívoro", 2),
   GAZELA: new Animal("GAZELA", ["savana"], "herbívoro", 2),
@@ -9,3 +9,4 @@ export const ANIMAIS_FIXOS = {
   HIPOPOTAMO: new Animal("HIPOPOTAMO", ["savana", "rio"], "herbívoro", 4),
 };
 
+export { ANIMAIS };
