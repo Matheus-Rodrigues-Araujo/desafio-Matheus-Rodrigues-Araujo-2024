@@ -1,6 +1,6 @@
 import { Recinto } from "./entidades/recinto.js";
 import { RecintosZoo } from "./recintos-zoo.js";
-import { ANIMAIS } from "./constants/data.js";
+import { ANIMAIS } from "./constantes/data.js";
 
 describe("Recintos do Zoologico", () => {
   test("Deve criar um Recinto com as propriedades adequadas", () => {

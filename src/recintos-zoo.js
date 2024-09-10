@@ -1,5 +1,5 @@
 import { Recinto } from "./entidades/recinto";
-import { ANIMAIS as a } from "./constants/data";
+import { ANIMAIS as a } from "./constantes/data";
 
 class RecintosZoo {
   constructor() {
