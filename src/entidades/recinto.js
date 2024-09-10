@@ -36,7 +36,7 @@ class Recinto {
   existemEspeciesDiferentes() {
     const especies = this.animais.map((a) => a.especie);
     const especiesUnicas = new Set(especies);
-    return especiesUnicas.size > 1; // Retorna true se houver mais de uma espécie
+    return especiesUnicas.size > 1; 
   }
 
   analisarViabilidade(animal, quantidade) {
